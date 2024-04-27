@@ -1,7 +1,5 @@
 from sqlmodel import Field, SQLModel, create_engine
-from typing import Optional
-from sqlalchemy.schema import CreateTable
-
+from db.db_access import PostgresDB
 
 class IPL_MatchInfo(SQLModel, table=True):
     id: int = Field(primary_key=True, nullable=False)
@@ -48,4 +46,11 @@ class IPL_MatchData(SQLModel, table = True):
     other_player_dismissed: float = Field(nullable = True)
 
 
+def create_db_and_tables():
+    db_obj = PostgresDB()
+    engine = db_obj.connect_to_db()
+    SQLModel.metadata.create_all(engine)
+    for table_name, table in SQLModel.metadata.tables.items():
+        columns = ', '.join(str(column.compile(dialect=engine.dialect)) for column in table.c)
+        print(f"Create TABLE {table_name} ({columns})")
 

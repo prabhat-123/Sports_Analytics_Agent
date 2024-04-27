@@ -4,7 +4,7 @@ from config.prompt import generate_final_prompt
 from langchain_community.utilities import SQLDatabase
 from langchain_community.agent_toolkits import create_sql_agent
 from langchain_openai import ChatOpenAI
-from db_access import PostgresDB
+from IPL_Agent.db.db_access import PostgresDB
 
 db = PostgresDB()
 connection_string = db.create_connection_string()
