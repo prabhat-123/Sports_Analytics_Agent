@@ -1,0 +1,68 @@
+{
+    "easy": [
+        {
+            "question": "Retrieve the names of all the unique cricket teams participating in the matches.",
+            "query": "SELECT DISTINCT Team1 FROM Matches UNION SELECT DISTINCT Team2 FROM Matches;"
+        },
+        {
+            "question": "List all the unique cricket matches that took place in a specific city.",
+            "query": "SELECT DISTINCT * FROM Matches WHERE City = 'YourCity';"
+        },
+        {
+            "question": "Find the total number of unique cricket matches held in a particular season.",
+            "query": "SELECT COUNT(DISTINCT MatchNumber) AS TotalMatches FROM Matches WHERE Season = 'YourSeason';"
+        },
+        {
+            "question": "Retrieve the unique venue and date of the cricket match where a specific team participated.",
+            "query": "SELECT DISTINCT Venue, Date FROM Matches WHERE Team1 = 'YourTeam' OR Team2 = 'YourTeam';"
+        },
+        {
+            "question": "List the names of all the unique players from a specific cricket team.",
+            "query": "SELECT DISTINCT Team1Players FROM Matches WHERE Team1 = 'YourTeam' UNION SELECT DISTINCT Team2Players FROM Matches WHERE Team2 = 'YourTeam';"
+        }
+    ],
+    "intermediate": [
+        {
+            "question": "Find the number of unique cricket matches won by each team.",
+            "query": "SELECT Team, COUNT(DISTINCT MatchNumber) AS Wins FROM (SELECT Team1 AS Team, MatchNumber FROM Matches WHERE WinningTeam = Team1 UNION ALL SELECT Team2 AS Team, MatchNumber FROM Matches WHERE WinningTeam = Team2) AS WinningMatches GROUP BY Team;"
+        },
+        {
+            "question": "Retrieve the details of unique cricket matches where the winning team won by a margin greater than 50 runs.",
+            "query": "SELECT DISTINCT * FROM Matches WHERE Margin > 50 AND WinningTeam IS NOT NULL;"
+        },
+        {
+            "question": "List the names of the cricket teams that have participated in at least 5 unique matches.",
+            "query": "SELECT Team, COUNT(DISTINCT MatchNumber) AS MatchesPlayed FROM (SELECT Team1 AS Team, MatchNumber FROM Matches UNION ALL SELECT Team2 AS Team, MatchNumber FROM Matches) AS Teams GROUP BY Team HAVING MatchesPlayed >= 5;"
+        },
+        {
+            "question": "Find the average margin of victory for all the unique cricket matches.",
+            "query": "SELECT AVG(Margin) AS AverageMargin FROM Matches WHERE WinningTeam IS NOT NULL;"
+        },
+        {
+            "question": "Retrieve the names of the players who were awarded 'Man of the Match' from a specific team in unique matches.",
+            "query": "SELECT DISTINCT Player_of_Match FROM Matches WHERE WinningTeam = 'YourTeam';"
+        }
+    ],
+    "hard": [
+        {
+            "question": "List the names of the cricket teams along with the number of unique matches they have won, sorted in descending order of wins.",
+            "query": "SELECT Team, COUNT(DISTINCT MatchNumber) AS Wins FROM (SELECT Team1 AS Team, MatchNumber FROM Matches WHERE WinningTeam = Team1 UNION ALL SELECT Team2 AS Team, MatchNumber FROM Matches WHERE WinningTeam = Team2) AS WinningMatches GROUP BY Team ORDER BY Wins DESC;"
+        },
+        {
+            "question": "Find the city where the maximum number of unique cricket matches took place.",
+            "query": "SELECT City, COUNT(DISTINCT MatchNumber) AS MatchesCount FROM Matches GROUP BY City ORDER BY MatchesCount DESC LIMIT 1;"
+        },
+        {
+            "question": "Retrieve the details of unique cricket matches where the toss-winning team also won the match.",
+            "query": "SELECT DISTINCT * FROM Matches WHERE TossWinner = WinningTeam;"
+        },
+        {
+            "question": "Calculate the total number of runs scored in all the unique cricket matches.",
+            "query": "SELECT SUM(WonBy) AS TotalRuns FROM Matches WHERE WinningTeam IS NOT NULL;"
+        },
+        {
+            "question": "List the names of the cricket teams that have never won a unique match.",
+            "query": "SELECT Team FROM (SELECT Team1 AS Team FROM Matches WHERE WinningTeam IS NULL UNION ALL SELECT Team2 AS Team FROM Matches WHERE WinningTeam IS NULL) AS NoWins GROUP BY Team;"
+        }
+    ]
+}
