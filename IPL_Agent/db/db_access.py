@@ -29,11 +29,5 @@ class PostgresDB:
         self.engine = sa.create_engine(connection_string)
         return self.engine
 
-    # def insert_data_into_db(self):
-    #     if self.engine is None:
-    #         raise Exception("Database connection not initialized. Call connect_to_db() first.")
-        
-    #     df = pd.read_csv(self.csv_path)
-        # df.to_sql(self.table, self.engine, schema="", if_exists='replace')
 
 

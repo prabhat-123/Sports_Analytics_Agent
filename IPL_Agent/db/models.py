@@ -1,5 +1,6 @@
-from sqlmodel import Field, SQLModel, create_engine
+from sqlmodel import Field, SQLModel
 from db.db_access import PostgresDB
+
 
 class IPL_MatchInfo(SQLModel, table=True):
     id: int = Field(primary_key=True, nullable=False)
@@ -22,7 +23,9 @@ class IPL_MatchInfo(SQLModel, table=True):
     umpire3: str = Field(nullable = True)
 
 class IPL_MatchData(SQLModel, table = True):
-    match_id: int = Field(primary_key = True, nullable = False)
+    pk: int = Field(nullable = False, primary_key=True)
+
+    match_id: int = Field(nullable = False)
     season: str = Field(nullable = False)
     start_date: str = Field(nullable = False)
     venue: str = Field(nullable = False)
