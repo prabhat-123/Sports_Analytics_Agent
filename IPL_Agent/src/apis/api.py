@@ -1,6 +1,5 @@
 import os
 import pandas as pd
-import fastapi
 import aiofiles
 from fastapi import File, UploadFile, APIRouter, HTTPException
 from fastapi.responses import JSONResponse

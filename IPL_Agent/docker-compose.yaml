@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  api:
+    build: ./
+    networks:
+      - backend
+    env_file:
+      - .env
+    ports:
+      - "8085:8080"
+    depends_on:
+      - redis
+      - postgres
+  redis:
+    image: redis:latest
+    networks:
+      - backend
+    ports:
+      - "6375:6379"
+      - "8014:8001"
+    command: ["redis-server", "--appendonly", "yes"]  # Enable AOF persistence
+  postgres:
+    container_name: postgresdb
+    image: postgres:13-alpine
+    networks:
+      - backend
+    ports:
+      - "5334:5432"
+    env_file:
+      - .env
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+
+networks:
+  backend:
